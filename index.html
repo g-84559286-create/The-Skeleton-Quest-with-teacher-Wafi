@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Skeleton Quest with Teacher Wafi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Fredoka', 'Segoe UI', sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);
+      color: #fff;
+      margin: 0;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .game-card {
+      background: rgba(30, 41, 59, 0.95);
+      border-radius: 28px;
+      padding: 24px;
+      width: 100%;
+      max-width: 900px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(168, 85, 247, 0.25);
+      border: 3px solid #a855f7;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Teacher Header Banner */
+    .teacher-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 20px;
+      padding: 10px 20px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .teacher-avatar {
+      width: 65px;
+      height: 65px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+    }
+
+    .teacher-info h2 {
+      margin: 0;
+      color: #38bdf8;
+      font-size: 1.3rem;
+      letter-spacing: 0.5px;
+    }
+
+    .teacher-info p {
+      margin: 2px 0 0 0;
+      color: #facc15;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    h1.game-title {
+      text-align: center;
+      color: #facc15;
+      margin: 0 0 8px 0;
+      font-size: 2rem;
+      text-shadow: 0 3px 10px rgba(250, 204, 21, 0.3);
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: #cbd5e1;
+      font-size: 1.1rem;
+      margin: 0 0 20px 0;
+    }
+
+    /* PHASE 1: FULL BODY ASSEMBLY */
+    .assembly-layout {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .source-box {
+      background: #0f172a;
+      border: 2px dashed #64748b;
+      padding: 15px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      min-width: 200px;
+    }
+
+    .draggable-bone {
+      cursor: grab;
+      touch-action: none;
+      transition: transform 0.2s, filter 0.2s;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+    }
+
+    .draggable-bone:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 12px #a855f7);
+    }
+
+    .draggable-bone:active {
+      cursor: grabbing;
+    }
+
+    /* Skeleton Full Body Frame */
+    .skeleton-frame {
+      background: #1e293b;
+      border: 3px solid #a855f7;
+      border-radius: 24px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 250px;
+      height: 410px;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .drop-zone {
+      width: 100%;
+      border: 2px dashed #475569;
+      border-radius: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.4);
+      transition: all 0.3s ease;
+      color: #64748b;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .zone-head { height: 85px; margin-bottom: 6px; }
+    .zone-chest { height: 85px; margin-bottom: 6px; }
+    .zone-arms { height: 75px; margin-bottom: 6px; }
+    .zone-legs { height: 110px; }
+
+    .drop-zone.hovered {
+      border-color: #facc15;
+      background: rgba(250, 204, 21, 0.15);
+    }
+
+    .drop-zone.filled {
+      border: 2px solid #4ade80;
+      background: rgba(74, 222, 128, 0.1);
+    }
+
+    /* PHASE 2 & 3: QUIZ & RESULTS */
+    .hidden {
+      display: none !important;
+    }
+
+    .quiz-card {
+      background: #0f172a;
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 10px;
+      border: 2px solid #38bdf8;
+    }
+
+    .quiz-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1e293b;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-bottom: 18px;
+    }
+
+    .question-box {
+      font-size: 1.35rem;
+      color: #f8fafc;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .opt-btn {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 2px solid #475569;
+      padding: 16px 20px;
+      border-radius: 16px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .opt-btn:hover {
+      background: #38bdf8;
+      color: #0f172a;
+      border-color: #38bdf8;
+      transform: scale(1.02);
+    }
+
+    /* Result Screen */
+    .result-screen {
+      text-align: center;
+      padding: 25px 15px;
+    }
+
+    .score-badge {
+      font-size: 4rem;
+      color: #4ade80;
+      font-weight: 800;
+      margin: 15px 0;
+      text-shadow: 0 0 25px rgba(74, 222, 128, 0.4);
+    }
+
+    .award-title {
+      font-size: 1.4rem;
+      color: #facc15;
+      background: #1e293b;
+      border: 2px solid #facc15;
+      padding: 10px 25px;
+      border-radius: 50px;
+      display: inline-block;
+      font-weight: 700;
+      margin-bottom: 25px;
+    }
+
+    .restart-btn {
+      background: #4ade80;
+      color: #0f172a;
+      border: none;
+      padding: 15px 35px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .restart-btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+<div class="game-card">
+  
+  <!-- Teacher Wafi Header Banner -->
+  <div class="teacher-header">
+    <svg class="teacher-avatar" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="46" fill="#a855f7"/>
+      <!-- Hijab -->
+      <path d="M 22 42 C 22 18, 78 18, 78 42 C 78 68, 85 85, 82 92 C 78 96, 22 96, 18 92 C 15 85, 22 68, 22 42 Z" fill="#ec4899"/>
+      <!-- Face -->
+      <ellipse cx="50" cy="48" rx="18" ry="22" fill="#fcd34d"/>
+      <!-- Eyes -->
+      <circle cx="43" cy="45" r="3" fill="#0f172a"/>
+      <circle cx="57" cy="45" r="3" fill="#0f172a"/>
+      <!-- Smile -->
+      <path d="M 43 55 Q 50 62 57 55" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <!-- Hijab Under-Cap -->
+      <path d="M 33 34 Q 50 28 67 34 C 67 30, 33 30, 33 34 Z" fill="#38bdf8"/>
+    </svg>
+    <div class="teacher-info">
+      <h2>Class with Teacher Wafi 👩‍🏫</h2>
