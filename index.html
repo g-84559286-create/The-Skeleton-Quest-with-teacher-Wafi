@@ -101,7 +101,6 @@
       width: 280px;
     }
 
-    /* Bone Cards With Graphics */
     .bone-card {
       background: #334155;
       border: 3px solid #64748b;
@@ -136,12 +135,11 @@
       pointer-events: none;
     }
 
-    /* Kunci grafik SVG supaya klik/tap diproses pada butang utama */
     .bone-card svg, .drop-zone svg {
       pointer-events: none;
     }
 
-    /* Skeleton Stand Frame */
+    /* Skeleton Frame */
     .skeleton-frame {
       background: #0f172a;
       border: 3px solid #a855f7;
@@ -187,3 +185,136 @@
 
     /* Quiz Screen */
     .hidden { display: none !important; }
+
+    .quiz-card {
+      background: #0f172a;
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 8px;
+      border: 2px solid #38bdf8;
+    }
+
+    .quiz-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1e293b;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #38bdf8;
+      margin-bottom: 12px;
+    }
+
+    .question-box {
+      font-size: 1.15rem;
+      color: #f8fafc;
+      margin-bottom: 14px;
+      line-height: 1.4;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .opt-btn {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 2px solid #475569;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      cursor: pointer;
+      text-align: center;
+      font-weight: bold;
+      touch-action: manipulation;
+    }
+
+    .opt-btn:active {
+      background: #38bdf8;
+      color: #0f172a;
+    }
+
+    /* Result Screen */
+    .result-screen { text-align: center; padding: 20px 10px; }
+    .score-badge {
+      font-size: 3.5rem;
+      color: #22c55e;
+      font-weight: 800;
+      margin: 10px 0;
+    }
+    .award-title {
+      font-size: 1.2rem;
+      color: #facc15;
+      background: #0f172a;
+      border: 2px solid #facc15;
+      padding: 8px 20px;
+      border-radius: 40px;
+      display: inline-block;
+      font-weight: bold;
+    }
+    .restart-btn {
+      background: #22c55e;
+      color: #0f172a;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 20px;
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+<body>
+
+<div class="game-card">
+  
+  <!-- Teacher Banner Header -->
+  <div class="teacher-header">
+    <svg class="teacher-avatar" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="46" fill="#a855f7"/>
+      <path d="M 22 42 C 22 18, 78 18, 78 42 C 78 68, 85 85, 82 92 C 78 96, 22 96, 18 92 C 15 85, 22 68, 22 42 Z" fill="#ec4899"/>
+      <ellipse cx="50" cy="48" rx="18" ry="22" fill="#fcd34d"/>
+      <circle cx="43" cy="45" r="3" fill="#0f172a"/>
+      <circle cx="57" cy="45" r="3" fill="#0f172a"/>
+      <path d="M 43 55 Q 50 62 57 55" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <path d="M 33 34 Q 50 28 67 34 C 67 30, 33 30, 33 34 Z" fill="#38bdf8"/>
+    </svg>
+    <div class="teacher-info">
+      <h2>Class with Teacher Wafi 👩‍🏫</h2>
+      <p>Year 2 English Game</p>
+    </div>
+  </div>
+
+  <!-- PHASE 1: SKELETON BUILD -->
+  <div id="phase1">
+    <h1 class="game-title">🦴 Build the Skeleton!</h1>
+    <p class="subtitle">1. Tap a bone picture ➔ 2. Tap its spot on the body!</p>
+    
+    <div class="assembly-layout">
+      <div class="source-box">
+        <!-- Head Card -->
+        <div class="bone-card" id="b-head" onclick="pickBone('head')">
+          <svg width="45" height="45" viewBox="0 0 100 100">
+            <path d="M 20 50 A 30 30 0 1 1 80 50 A 20 20 0 0 1 70 80 L 30 80 A 20 20 0 0 1 20 50 Z" fill="#f8fafc"/>
+            <circle cx="38" cy="48" r="7" fill="#0f172a"/>
+            <circle cx="62" cy="48" r="7" fill="#0f172a"/>
+            <path d="M 42 62 L 50 56 L 58 62" stroke="#0f172a" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <line x1="38" y1="72" x2="62" y2="72" stroke="#0f172a" stroke-width="3"/>
+          </svg>
+          <span>Head</span>
+        </div>
+
+        <!-- Chest Card -->
+        <div class="bone-card" id="b-chest" onclick="pickBone('chest')">
+          <svg width="45" height="45" viewBox="0 0 100 100">
+            <line x1="50" y1="10" x2="50" y2="90" stroke="#f8fafc" stroke-width="8"/>
+            <path d="M 25 25 Q 50 15 75 25 M 20 40 Q 50 30 80 40 M 20 55 Q 50 45 80 55 M 25 70 Q 50 60 75 70" stroke="#f8fafc" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </
