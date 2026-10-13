@@ -5,409 +5,188 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Skeleton Quest with Teacher Wafi</title>
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-      user-select: none;
-    }
-
     body {
       background-color: #0f172a;
       color: #ffffff;
-      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
       padding: 15px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      margin: 0;
     }
-
-    .game-card {
-      background-color: #1e293b;
-      border-radius: 20px;
-      padding: 20px;
-      width: 100%;
-      max-width: 800px;
+    .container {
+      background: #1e293b;
       border: 3px solid #a855f7;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border-radius: 16px;
+      padding: 15px;
+      max-width: 500px;
+      margin: auto;
     }
-
-    /* Teacher Banner */
-    .teacher-header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      background-color: #0f172a;
-      border-radius: 15px;
+    .header {
+      background: #0f172a;
       padding: 10px;
+      border-radius: 10px;
       margin-bottom: 15px;
       border: 1px solid #a855f7;
     }
-
-    .teacher-avatar {
-      width: 50px;
-      height: 50px;
-    }
-
-    .teacher-info h2 {
-      margin: 0;
-      color: #38bdf8;
-      font-size: 1.1rem;
-    }
-
-    .teacher-info p {
-      margin: 2px 0 0 0;
-      color: #facc15;
-      font-size: 0.9rem;
-      font-weight: bold;
-    }
-
-    h1.game-title {
-      text-align: center;
-      color: #facc15;
-      margin: 0 0 5px 0;
-      font-size: 1.6rem;
-    }
-
-    p.subtitle {
-      text-align: center;
-      color: #cbd5e1;
-      font-size: 0.95rem;
-      margin: 0 0 15px 0;
-    }
-
-    /* Assembly Area */
-    .assembly-layout {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .source-box {
-      background-color: #0f172a;
-      border: 2px dashed #64748b;
-      padding: 15px;
-      border-radius: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: center;
-      min-width: 200px;
-    }
-
-    .draggable-bone {
-      cursor: pointer;
-      padding: 8px;
-      border-radius: 10px;
-      background-color: #334155;
-      border: 2px solid #64748b;
-      width: 140px;
-      text-align: center;
-      font-weight: bold;
-      color: #f8fafc;
-    }
-
-    .draggable-bone.selected {
-      border-color: #facc15;
-      background-color: #ca8a04;
-      color: #0f172a;
-    }
-
-    /* Skeleton Frame */
-    .skeleton-frame {
-      background-color: #0f172a;
-      border: 3px solid #a855f7;
-      border-radius: 15px;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 220px;
-    }
-
-    .drop-zone {
-      width: 100%;
-      border: 2px dashed #475569;
-      border-radius: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #1e293b;
-      color: #94a3b8;
-      font-weight: bold;
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-      cursor: pointer;
-      height: 60px;
-    }
-
-    .drop-zone.active-target {
-      border-color: #38bdf8;
-      background-color: #0284c7;
-      color: #ffffff;
-    }
-
-    .drop-zone.filled {
-      border: 2px solid #22c55e;
-      background-color: #15803d;
-      color: #ffffff;
-    }
-
-    /* Quiz Screen */
-    .hidden { display: none !important; }
-
-    .quiz-card {
-      background-color: #0f172a;
-      border-radius: 15px;
-      padding: 15px;
-      margin-top: 10px;
-      border: 2px solid #38bdf8;
-    }
-
-    .quiz-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #1e293b;
-      padding: 8px 12px;
+    .status-box {
+      background: #334155;
+      padding: 10px;
       border-radius: 8px;
-      font-size: 1rem;
-      font-weight: bold;
-      color: #38bdf8;
       margin-bottom: 15px;
-    }
-
-    .question-box {
-      font-size: 1.15rem;
-      color: #f8fafc;
-      margin-bottom: 15px;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .options-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .opt-btn {
-      background-color: #1e293b;
-      color: #f8fafc;
-      border: 2px solid #475569;
-      padding: 12px 15px;
-      border-radius: 10px;
-      font-size: 1rem;
-      cursor: pointer;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .opt-btn:hover {
-      background-color: #38bdf8;
-      color: #0f172a;
-    }
-
-    /* Result */
-    .result-screen { text-align: center; padding: 15px; }
-    .score-badge {
-      font-size: 3rem;
-      color: #22c55e;
-      font-weight: bold;
-      margin: 10px 0;
-    }
-    .award-title {
-      font-size: 1.1rem;
       color: #facc15;
-      background-color: #0f172a;
-      border: 2px solid #facc15;
-      padding: 8px 15px;
-      border-radius: 30px;
-      display: inline-block;
       font-weight: bold;
     }
-    .restart-btn {
-      background-color: #22c55e;
+    .btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      background: #38bdf8;
       color: #0f172a;
       border: none;
-      padding: 10px 25px;
-      font-size: 1rem;
+      padding: 15px 10px;
+      font-size: 16px;
       font-weight: bold;
       border-radius: 10px;
       cursor: pointer;
-      margin-top: 15px;
+    }
+    button:active {
+      background: #facc15;
+    }
+    button:disabled {
+      background: #475569;
+      color: #94a3b8;
+      cursor: not-allowed;
+    }
+    .hidden { display: none; }
+    .quiz-btn {
+      width: 100%;
+      margin-bottom: 10px;
+      background: #1e293b;
+      color: #fff;
+      border: 2px solid #38bdf8;
     }
   </style>
 </head>
 <body>
 
-<div class="game-card">
-  
-  <div class="teacher-header">
-    <svg class="teacher-avatar" viewBox="0 0 100 100">
-      <circle cx="50" cy="50" r="46" fill="#a855f7"/>
-      <path d="M 22 42 C 22 18, 78 18, 78 42 C 78 68, 85 85, 82 92 C 78 96, 22 96, 18 92 C 15 85, 22 68, 22 42 Z" fill="#ec4899"/>
-      <ellipse cx="50" cy="48" rx="18" ry="22" fill="#fcd34d"/>
-      <circle cx="43" cy="45" r="3" fill="#0f172a"/>
-      <circle cx="57" cy="45" r="3" fill="#0f172a"/>
-      <path d="M 43 55 Q 50 62 57 55" stroke="#0f172a" stroke-width="2.5" fill="none"/>
-    </svg>
-    <div class="teacher-info">
-      <h2>Class with Teacher Wafi 👩‍🏫</h2>
-      <p>Year 2 English Game</p>
-    </div>
+<div class="container">
+  <div class="header">
+    <h2 style="margin:0; color:#38bdf8;">Class with Teacher Wafi 👩‍🏫</h2>
+    <p style="margin:5px 0 0 0; color:#facc15;">Year 2 English Game</p>
   </div>
 
   <!-- PHASE 1 -->
   <div id="phase1">
-    <h1 class="game-title">🦴 Build the Skeleton!</h1>
-    <p class="subtitle">Click a bone, then click the matching spot on the body!</p>
+    <h2 style="color:#facc15;">1. Tap a Bone</h2>
+    <div class="status-box" id="statusText">Select a bone below!</div>
     
-    <div class="assembly-layout">
-      <div class="source-box">
-        <div class="draggable-bone" id="part-head" data-type="head">💀 1. Head</div>
-        <div class="draggable-bone" id="part-chest" data-type="chest">🦴 2. Chest</div>
-        <div class="draggable-bone" id="part-arms" data-type="arms">🦾 3. Arms</div>
-        <div class="draggable-bone" id="part-legs" data-type="legs">🦵 4. Legs</div>
-      </div>
+    <div class="btn-grid">
+      <button id="b-head" onclick="pickBone('Head')">💀 1. Head</button>
+      <button id="b-chest" onclick="pickBone('Chest')">🦴 2. Chest</button>
+      <button id="b-arms" onclick="pickBone('Arms')">🦾 3. Arms</button>
+      <button id="b-legs" onclick="pickBone('Legs')">🦵 4. Legs</button>
+    </div>
 
-      <div class="skeleton-frame">
-        <div class="drop-zone" data-slot="head">Spot 1: Head</div>
-        <div class="drop-zone" data-slot="chest">Spot 2: Chest</div>
-        <div class="drop-zone" data-slot="arms">Spot 3: Arms</div>
-        <div class="drop-zone" data-slot="legs">Spot 4: Legs</div>
-      </div>
+    <h2 style="color:#facc15;">2. Tap Spot on Body</h2>
+    <div class="btn-grid">
+      <button onclick="placeBone('Head')">Spot 1: Head</button>
+      <button onclick="placeBone('Chest')">Spot 2: Chest</button>
+      <button onclick="placeBone('Arms')">Spot 3: Arms</button>
+      <button onclick="placeBone('Legs')">Spot 4: Legs</button>
     </div>
   </div>
 
   <!-- PHASE 2 -->
   <div id="phase2" class="hidden">
-    <h1 class="game-title">⭐ Teacher Wafi's Quiz ⭐</h1>
-    <div class="quiz-card">
-      <div class="quiz-bar">
-        <span>Year 2 Quiz</span>
-        <span id="scoreText">Score: 0</span>
-      </div>
-      <div class="question-box" id="questionText">Loading...</div>
-      <div class="options-grid" id="optionsContainer"></div>
-    </div>
+    <h2 style="color:#facc15;">⭐ Teacher Wafi's Quiz ⭐</h2>
+    <p id="scoreDisplay" style="color:#38bdf8; font-weight:bold;">Score: 0</p>
+    <h3 id="questionText">Question goes here</h3>
+    <div id="optionsBox"></div>
   </div>
 
   <!-- PHASE 3 -->
-  <div id="phase3" class="hidden result-screen">
-    <h1 class="game-title">🎉 Well Done!</h1>
-    <p class="subtitle">Teacher Wafi is happy with your work!</p>
-    <div class="score-badge" id="finalScore">0 / 50</div>
-    <div class="award-title" id="badgeText">Super Star Pupil!</div>
-    <br>
-    <button class="restart-btn" onclick="location.reload()">🔄 Play Again</button>
+  <div id="phase3" class="hidden">
+    <h1 style="color:#4ade80;">🎉 Well Done!</h1>
+    <h2 id="finalScore" style="color:#facc15;">0 / 50</h2>
+    <button onclick="location.reload()" style="background:#4ade80; color:#0f172a;">🔄 Play Again</button>
   </div>
-
 </div>
 
 <script>
-  var selectedBone = null;
-  var filledCount = 0;
+  var chosenBone = "";
+  var completed = 0;
   var score = 0;
-  var qIndex = 0;
+  var qIdx = 0;
 
   var questions = [
-    { question: "1. What are the bones inside our body called? 💀", options: ["A) Skeleton", "B) Hair"], correct: 0 },
-    { question: "2. Which bone is at the top of our body? 💀", options: ["A) Foot", "B) Head"], correct: 1 },
-    { question: "3. What do our bones help us do? 🏃‍♂️", options: ["A) Move and stand", "B) Sleep"], correct: 0 },
-    { question: "4. Do humans have bones inside their bodies? 🧍‍♂️", options: ["A) Yes", "B) No"], correct: 0 },
-    { question: "5. Do animals like dogs and cats have skeletons? 🐶", options: ["A) Yes", "B) No"], correct: 0 }
+    { q: "1. What are the bones inside our body called? 💀", opts: ["Skeleton", "Hair"], ans: 0 },
+    { q: "2. Which bone is at the top of our body? 💀", opts: ["Foot", "Head"], ans: 1 },
+    { q: "3. What do our bones help us do? 🏃‍♂️", opts: ["Move and stand", "Sleep"], ans: 0 },
+    { q: "4. Do humans have bones inside their bodies? 🧍‍♂️", opts: ["Yes", "No"], ans: 0 },
+    { q: "5. Do animals like dogs and cats have skeletons? 🐶", opts: ["Yes", "No"], ans: 0 }
   ];
 
-  var bones = document.querySelectorAll('.draggable-bone');
-  var zones = document.querySelectorAll('.drop-zone');
+  function pickBone(name) {
+    chosenBone = name;
+    document.getElementById('statusText').innerText = "Selected: " + name + "! Now tap 'Spot " + name + "'";
+  }
 
-  bones.forEach(function(bone) {
-    bone.addEventListener('click', function() {
-      bones.forEach(function(b) { b.classList.remove('selected'); });
-      bone.classList.add('selected');
-      selectedBone = bone;
+  function placeBone(spot) {
+    if (chosenBone === "") {
+      alert("Please tap a bone from Step 1 first!");
+      return;
+    }
 
-      zones.forEach(function(z) {
-        if(z.getAttribute('data-slot') === bone.getAttribute('data-type') && !z.classList.contains('filled')) {
-          z.classList.add('active-target');
-        } else {
-          z.classList.remove('active-target');
-        }
-      });
-    });
-  });
+    if (chosenBone === spot) {
+      alert("✅ Correct! Fitted " + spot + "!");
+      document.getElementById('b-' + spot.toLowerCase()).disabled = true;
+      chosenBone = "";
+      document.getElementById('statusText').innerText = "Great! Select the next bone.";
+      completed++;
 
-  zones.forEach(function(zone) {
-    zone.addEventListener('click', function() {
-      if (!selectedBone) return;
-
-      var boneType = selectedBone.getAttribute('data-type');
-      var zoneSlot = zone.getAttribute('data-slot');
-      
-      if (boneType === zoneSlot && !zone.classList.contains('filled')) {
-        zone.innerHTML = selectedBone.innerHTML;
-        zone.classList.add('filled');
-        zone.classList.remove('active-target');
-        selectedBone.style.display = 'none';
-        selectedBone = null;
-        filledCount++;
-
-        if (filledCount === 4) {
-          setTimeout(function() {
-            alert("🌟 Great Job! You built the skeleton! Now let's start the Quiz!");
-            startQuiz();
-          }, 300);
-        }
-      } else {
-        alert("❌ Wrong spot! Try another one.");
+      if (completed === 4) {
+        alert("🎉 Skeleton Complete! Moving to Quiz!");
+        document.getElementById('phase1').classList.add('hidden');
+        document.getElementById('phase2').classList.remove('hidden');
+        loadQuiz();
       }
-    });
-  });
-
-  function startQuiz() {
-    document.getElementById('phase1').classList.add('hidden');
-    document.getElementById('phase2').classList.remove('hidden');
-    loadQuestion();
+    } else {
+      alert("❌ Wrong spot! Try matching " + chosenBone + " to Spot " + chosenBone);
+    }
   }
 
-  function loadQuestion() {
-    var q = questions[qIndex];
-    document.getElementById('questionText').textContent = q.question;
-    var container = document.getElementById('optionsContainer');
-    container.innerHTML = '';
+  function loadQuiz() {
+    var cur = questions[qIdx];
+    document.getElementById('questionText').innerText = cur.q;
+    var box = document.getElementById('optionsBox');
+    box.innerHTML = "";
 
-    q.options.forEach(function(opt, idx) {
+    cur.opts.forEach(function(opt, idx) {
       var btn = document.createElement('button');
-      btn.className = 'opt-btn';
-      btn.textContent = opt;
+      btn.className = "quiz-btn";
+      btn.innerText = opt;
       btn.onclick = function() {
-        if (idx === q.correct) {
+        if (idx === cur.ans) {
           score += 10;
-          alert("✅ Correct! +10 Points!");
+          alert("✅ Correct! +10 Points");
         } else {
-          alert("❌ Oops! Wrong answer!");
+          alert("❌ Wrong Answer!");
         }
-        document.getElementById('scoreText').textContent = "Score: " + score;
-        qIndex++;
-        if (qIndex < questions.length) loadQuestion();
-        else showResult();
+        document.getElementById('scoreDisplay').innerText = "Score: " + score;
+        qIdx++;
+        if (qIdx < questions.length) {
+          loadQuiz();
+        } else {
+          document.getElementById('phase2').classList.add('hidden');
+          document.getElementById('phase3').classList.remove('hidden');
+          document.getElementById('finalScore').innerText = "Score: " + score + " / 50";
+        }
       };
-      container.appendChild(btn);
+      box.appendChild(btn);
     });
-  }
-
-  function showResult() {
-    document.getElementById('phase2').classList.add('hidden');
-    document.getElementById('phase3').classList.remove('hidden');
-    document.getElementById('finalScore').textContent = score + " / 50";
-    var badge = document.getElementById('badgeText');
-    if (score === 50) badge.textContent = "🌟 Teacher Wafi's Super Star!";
-    else if (score >= 30) badge.textContent = "🦴 Skeleton Explorer!";
-    else badge.textContent = "🎈 Good Try!";
   }
 </script>
 
